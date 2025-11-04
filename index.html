@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>لمتنا — الصفحة الرئيسية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const logged = localStorage.getItem("lammatna_logged");
+      const startBtn = document.getElementById("startBtn");
+      const myEventsBtn = document.getElementById("myEventsBtn");
+
+      if (logged) {
+        startBtn.textContent = "إنشاء فعالية";
+        startBtn.href = "create.html";
+        myEventsBtn.style.display = "inline-block";
+      } else {
+        startBtn.textContent = "ابدأ الآن";
+        startBtn.href = "register.html";
+        myEventsBtn.style.display = "none";
+      }
+    });
+  </script>
+</head>
+<body>
+  <div id="notif-area" class="notif-area" aria-live="polite"></div>
+
+  <header class="navbar">
+    <div class="logo-container">
+      <a href="index.html" class="logo-link">
+        <img src="Lammatna.png" alt="لمتنا" class="logo">
+      </a>
+      <a href="index.html" class="site-title-link">
+        <h1 class="site-title">لمتنا</h1>
+      </a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="gatherings.html" id="nav-gatherings">فعالياتي</a>
+      <a href="login.html" id="nav-login">تسجيل الدخول</a>
+      <a href="register.html" id="nav-register">تسجيل</a>
+      <a href="profile.html" id="nav-profile" style="display:none;">حسابي</a>
+    </nav>
+  </header>
+
+  <main class="container">
+<section class="hero">
+  <div class="hero-content">
+    <h2>نظّم لَمَّتك بسهولة</h2>
+    <p>منصة متكاملة لتنظيم الفعاليات الاجتماعية</p>
+    <div class="actions">
+      <a id="startBtn" class="btn" href="register.html">ابدأ الآن</a>
+      <a id="myEventsBtn" class="btn outline" href="gatherings.html">فعالياتي</a>
+    </div>
+  </div>
+  <img src="Lammatna.png" alt="شعار لمتنا" class="hero-img">
+</section>
+
+    <section class="features">
+      <h3>مميزات أساسية</h3>
+      <div class="grid">
+        <div class="card"><strong>إنشاء فعالية</strong><p>أضف التفاصيل وأدِر فعالياتك.</p></div>
+        <div class="card"><strong>تعيين المهام</strong><p>وزع المهام وتابع الإنجاز.</p></div>
+        <div class="card"><strong>الانضمام بالرمز</strong><p>انضم لأي فعالية برمز مشاركة.</p></div>
+        <div class="card"><strong>تذكيرات</strong><p>اختر متى تتلقى التذكير.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 لمتنا</p>
+  </footer>
+</body>
+</html>

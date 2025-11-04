@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>فعالياتي — لمتنا</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div id="notif-area" class="notif-area"></div>
+
+  <header class="navbar">
+    <div class="logo-container">
+      <a href="index.html" class="logo-link"><img src="Lammatna.png" alt="لمتنا" class="logo"></a>
+      <a href="index.html" class="site-title-link"><h1 class="site-title">لمتنا</h1></a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="gatherings.html" class="active">فعالياتي</a>
+
+      <a href="index.html" id="nav-logout" style="display:none">تسجيل الخروج</a>
+      <a href="profile.html" id="nav-profile" style="display:none">حسابي</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="hero">
+      <div class="hero-content">
+        <h2 id="welcomeUser">فعالياتي</h2>
+        <p>إدارة ومتابعة جميع فعالياتك في مكان واحد</p>
+      </div>
+    </div>
+      
+      <!-- Join by Code Section -->
+    <div class="form-panel">
+      <h3>انضم إلى فعالية</h3>
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <input type="text" id="joinCode" placeholder="أدخل رمز الفعالية" style="flex: 1;">
+        <button id="joinBtn" class="btn success" >
+          <i class="fas fa-sign-in-alt"></i> انضم
+        </button>      
+      </div>
+    </div>
+            <a href="create.html" class="btn" style="color: white; " >
+        <i class="fas fa-plus"></i> فعالية جديدة
+      </a>
+      <br>
+      <br>
+<!-- Filter Section -->
+<div class="filter-section">
+  <input type="text" id="searchInput" placeholder="🔍 ابحث في الفعاليات..." style="flex: 2;">
+  <select id="filterCategory">
+    <option value="">جميع الفئات</option>
+    <option value="اجتماع عائلي">اجتماع عائلي</option>
+    <option value="حفلة تخرج">حفلة تخرج</option>
+    <option value="اجتماع اصدقاء">اجتماع اصدقاء</option>
+    <option value="كشتة">كشتة</option>
+    <option value="اخرى">أخرى</option>
+  </select>
+  <input type="date" id="filterFrom" placeholder="من تاريخ">
+  <button id="clearFilter" class="btn outline">
+    <i class="fas fa-times"></i> مسح الفلتر
+  </button>
+</div>
+
+    <!-- Gatherings List -->
+    <div class="form-panel">
+    <section id="gatheringList" class="gathering-list">
+      <!-- JS will populate -->
+    </section>
+        </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 لمتنا  </p>
+  </footer>
+</body>
+</html>

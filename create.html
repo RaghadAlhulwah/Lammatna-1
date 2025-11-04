@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>إنشاء / تعديل فعالية — لمتنا</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div id="notif-area" class="notif-area"></div>
+
+  <header class="navbar">
+    <div class="logo-container">
+      <a href="index.html" class="logo-link"><img src="Lammatna.png" alt="لمتنا" class="logo"></a>
+      <a href="index.html" class="site-title-link"><h1 class="site-title">لمتنا</h1></a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="gatherings.html">فعالياتي</a>
+      <a href="index.html" id="nav-logout" style="display:none">تسجيل الخروج</a>
+      <a href="#" id="nav-profile" style="display:none">حسابي</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="form-panel">
+      <h2 id="formTitle">إنشاء فعالية جديدة</h2>
+      <form id="createForm">
+        <label for="g-name">اسم الفعالية</label>
+        <input id="g-name" type="text" required placeholder="أدخل اسم الفعالية">
+<br><br>
+        <label for="g-category">الفئة</label>
+        <select id="g-category" required>
+          <option value="">اختر فئة الفعالية</option>
+          <option value="اجتماع عائلي">اجتماع عائلي</option>
+          <option value="حفلة تخرج">حفلة تخرج</option>
+          <option value="اجتماع اصدقاء">اجتماع اصدقاء</option>
+          <option value="كشتة">كشتة</option>
+          <option value="اخرى">أخرى</option>
+        </select>
+<br><br>
+        <label for="g-date">التاريخ والوقت</label>
+        <input id="g-date" type="datetime-local" required>
+
+        <label for="g-location">الموقع</label>
+       
+          
+       
+          <!-- Map Container -->
+          <div id="map-container">
+            <div id="map" style="height: 400px; width: 100%; border-radius: 10px; border: 2px solid var(--border);"></div>
+            <div style="margin-top: 10px; padding: 10px; background: var(--light); border-radius: 8px;">
+              <strong>الموقع المحدد:</strong>
+              <span id="selectedLocation" style="color: var(--text); margin-right: 10px;">
+                انقر على الخريطة لاختيار الموقع
+              </span>
+            </div>
+          </div>
+          
+        </div>
+
+        <label for="g-reminder">تذكير</label>
+        <select id="g-reminder">
+          <option value="none">لا يوجد</option>
+          <option value="24h">يوم واحد قبل</option>
+          <option value="1h">ساعة واحدة قبل</option>
+        </select>
+<br><br>
+        <button class="btn" type="submit">
+          <i class="fas fa-save"></i> حفظ الفعالية
+        </button>
+        <button id="cancelEdit" type="button" class="btn outline" style="display:none">
+          <i class="fas fa-times"></i> إلغاء التعديل
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 لمتنا </p>
+  </footer>
+
+  <!-- Google Maps Script -->
+  <script>
+    // REPLACE THIS WITH YOUR ACTUAL GOOGLE MAPS API KEY
+    const GOOGLE_MAPS_API_KEY = 'AIzaSyD6GsOIGEvdoe6YnEL_un8pIXrlbOLN35U';
+    
+    let map;
+    let marker;
+    let geocoder;
+    let searchBox;
+
+    function initMap() {
+      console.log('Initializing Google Maps...');
+      
+      // Default location (Riyadh, Saudi Arabia)
+      const defaultLocation = { lat: 24.7136, lng: 46.6753 };
+      
+      // Create map
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: defaultLocation,
+        zoom: 12,
+        mapTypeControl: true,
+        streetViewControl: true,
+        fullscreenControl: true,
+        zoomControl: true,
+        styles: [
+          {
+            "elementType": "geometry",
+            "stylers": [{ "color": "#f5f5f5" }]
+          }
+        ]
+      });
+
+      // Initialize geocoder
+      geocoder = new google.maps.Geocoder();
+
+      // Create initial marker
+      marker = new google.maps.Marker({
+        map: map,
+        position: defaultLocation,
+        draggable: true,
+        title: 'موقع الفعالية',
+        animation: google.maps.Animation.DROP
+      });
+
+      // Setup search box
+      const searchInput = document.getElementById('map-search');
+      searchBox = new google.maps.places.SearchBox(searchInput);
+      
+      // Bias search results to current map view
+      map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+      });
+
+      // Handle place selection from search
+      searchBox.addListener('places_changed', function() {
+        const places = searchBox.getPlaces();
+        if (places.length === 0) return;
+
+        const place = places[0];
+        if (!place.geometry) return;
+
+        // Set map center to selected place
+        if (place.geometry.viewport) {
+          map.fitBounds(place.geometry.viewport);
+        } else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(17);
+        }
+
+        // Update marker position
+        marker.setPosition(place.geometry.location);
+        updateLocationInfo(place.geometry.location, place.formatted_address);
+      });
+
+      // Handle map clicks
+      map.addListener('click', function(e) {
+        marker.setPosition(e.latLng);
+        updateLocationInfo(e.latLng);
+      });
+
+      // Handle marker drag
+      marker.addListener('dragend', function() {
+        updateLocationInfo(marker.getPosition());
+      });
+
+      console.log('Google Maps initialized successfully');
+    }
+
+    function updateLocationInfo(latLng, address = null) {
+      // Update coordinates
+      document.getElementById('g-location-lat').value = latLng.lat();
+      document.getElementById('g-location-lng').value = latLng.lng();
+      
+      if (address) {
+        // Use provided address
+        document.getElementById('g-location').value = address;
+        document.getElementById('selectedLocation').textContent = address;
+      } else {
+        // Get address from coordinates
+        geocoder.geocode({ location: latLng }, function(results, status) {
+          if (status === 'OK' && results[0]) {
+            const address = results[0].formatted_address;
+            document.getElementById('g-location').value = address;
+            document.getElementById('selectedLocation').textContent = address;
+          } else {
+            const coordText = `الموقع: ${latLng.lat().toFixed(6)}, ${latLng.lng().toFixed(6)}`;
+            document.getElementById('g-location').value = coordText;
+            document.getElementById('selectedLocation').textContent = coordText;
+          }
+        });
+      }
+    }
+
+    function loadGoogleMaps() {
+      if (typeof google === 'undefined') {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=places`;
+        script.async = true;
+        script.defer = true;
+        script.onerror = function() {
+          console.error('Failed to load Google Maps');
+          alert('حدث خطأ في تحميل الخرائط. يرجى التحقق من اتصال الإنترنت.');
+        };
+        document.head.appendChild(script);
+      } else {
+        initMap();
+      }
+    }
+
+    // Load maps when page is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Page loaded, initializing maps...');
+      loadGoogleMaps();
+    });
+  </script>
+</body>
+</html>

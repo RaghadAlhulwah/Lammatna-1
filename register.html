@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تسجيل حساب — لمتنا</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div id="notif-area" class="notif-area"></div>
+  <header class="navbar">
+    <div class="logo-container">
+      <a href="index.html" class="logo-link"><img src="Lammatna.png" alt="لمتنا" class="logo"></a>
+      <a href="index.html" class="site-title-link"><h1 class="site-title">لمتنا</h1></a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="gatherings.html">فعالياتي</a>
+      <a href="login.html" id="nav-login">تسجيل الدخول</a>
+      <a href="register.html" id="nav-register">تسجيل</a>
+      <a href="#" id="nav-profile" style="display:none">حسابي</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="form-panel">
+      <h2>تسجيل حساب جديد</h2>
+      <form id="registerForm" autocomplete="off">
+        <label for="r-username">اسم المستخدم</label>
+        <input id="r-username" type="text" required>
+
+        <label for="r-email">البريد الإلكتروني</label>
+        <input id="r-email" type="email" required>
+
+        <label for="r-password">كلمة المرور (8 أحرف على الأقل)</label>
+        <input id="r-password" type="password" minlength="8" required>
+
+        <label for="r-confirm">تأكيد كلمة المرور</label>
+        <input id="r-confirm" type="password" minlength="8" required>
+        <br>
+        <br>
+        <button class="btn" type="submit">إنشاء الحساب</button>
+        <br>
+         <br>
+        <p class="muted">لديك حساب؟ <a href="login.html">تسجيل الدخول</a></p>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 لمتنا</p>
+  </footer>
+</body>
+</html>
