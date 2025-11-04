@@ -880,6 +880,7 @@ function checkReminders() {
 }
 
 
+
 /* -----------------------
    Initialize on DOM load
    ----------------------- */
@@ -907,3 +908,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (navRegister) navRegister.style.display='none';
   }
 });
+// Add these missing functions to app.js:
+
+function initializeSampleData() {
+  if (!localStorage.getItem(STORAGE.USERS)) {
+    saveJSON(STORAGE.USERS, []);
+  }
+  if (!localStorage.getItem(STORAGE.GATHERINGS)) {
+    saveJSON(STORAGE.GATHERINGS, []);
+  }
+}
+
+function addSampleUserLogin() {
+  // This can be empty or add sample users
+  console.log('Sample user login ready');
+}
+
+// PROBLEMATIC CODE:
+const navLogout = el('nav-logout') || document.querySelector('#nav-logout');
+const navRegister = document.getElementById('nav-register');
+
+// FIX: Remove refe
