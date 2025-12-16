@@ -1,4 +1,5 @@
-<h1>Lammatna – Event Coordination Platform</h1>
+<h1>Lammatna</h1>
+<h2>Event Coordination Platform</h2>
 
 <h3>Project Overview</h3>
 
